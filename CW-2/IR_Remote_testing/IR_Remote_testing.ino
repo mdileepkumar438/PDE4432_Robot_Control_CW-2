@@ -1,6 +1,8 @@
 //reference for I2C LCD display: https://lastminuteengineers.com/i2c-lcd-arduino-tutorial/
-//reference for IR remote configuration: 
+//reference for IR remote configuration:
 //https://create.arduino.cc/projecthub/agarwalkrishna3009/arduino-text-lcd-display-receive-infrared-remote-code-3f642e?ref=tag&ref_id=infrared&offset=9
+
+
 
 #include <LiquidCrystal_I2C.h>
 #include <IRremote.h>
