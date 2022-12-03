@@ -1,3 +1,7 @@
+
+// https://create.arduino.cc/projecthub/ryanchan/how-to-use-the-l298n-motor-driver-b124c5
+
+
 int motor1pin1 = 2;
 int motor1pin2 = 3;
 
@@ -14,12 +18,12 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:   
-  //digitalWrite(motor1pin1, HIGH);
-  //digitalWrite(motor1pin2, LOW);
-//
-  //digitalWrite(motor2pin1, HIGH);
-  //digitalWrite(motor2pin2, LOW);
-  //delay(1000);
+  digitalWrite(motor1pin1, HIGH);
+  digitalWrite(motor1pin2, LOW);
+
+  digitalWrite(motor2pin1, HIGH);
+  digitalWrite(motor2pin2, LOW);
+  delay(1000);
 
   digitalWrite(motor1pin1, LOW);
   digitalWrite(motor1pin2, HIGH);
