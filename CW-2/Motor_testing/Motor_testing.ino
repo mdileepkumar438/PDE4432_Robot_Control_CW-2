@@ -24,7 +24,7 @@ void loop() {
    analogWrite(motor1pin1, 255);
   analogWrite(motor1pin2, 0);
 
-  analogWrite(motor2pin1, 0);
-  analogWrite(motor2pin2, 255); // put your main code here, to run repeatedly:   
+  analogWrite(motor2pin1, 255);
+  analogWrite(motor2pin2, 0); // put your main code here, to run repeatedly:   
   
 }
