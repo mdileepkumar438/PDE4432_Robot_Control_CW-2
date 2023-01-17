@@ -11,11 +11,6 @@ int mode = 0;
 # define RIGHT_TURN 5
 # define LEFT_TURN 6
 // LFSensor more to the Left is "0"
-const int lineFollowSensor0 = 12; 
-const int lineFollowSensor1 = 18; 
-const int lineFollowSensor2 = 17; 
-const int lineFollowSensor3 = 16;
-const int lineFollowSensor4 = 19;
 
 
 int LFSensor[5]={0, 0, 0, 0, 0};
