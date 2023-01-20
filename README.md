@@ -43,3 +43,7 @@ git clone https://github.com/mdileepkumar438/PDE4432_Robot_Control_CW-2
 
 
 ## Main Program of the Project
+
+This is the Main program of this project, which is the `Smart Delivery: A Vehicle Routing Bot for Efficient Logistics`, which is a mannual control by `IR remote` and move to Destination place on a `Pre-Defined` path `Line_following`
+
+* [Smart Delivery: VRB](https://github.com/mdileepkumar438/PDE4432_Robot_Control_CW-2/blob/main/CW-2/Pick_%26_Place/Pick_%26_Place.ino)
