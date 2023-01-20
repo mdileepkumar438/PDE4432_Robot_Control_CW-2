@@ -75,10 +75,11 @@ int sensor_sum;
 //float Kp = 5;   // dummy
 //float Ki = 0;   //dummy
 //float Kd = 40;  //(Kp-1)*10
-float t = millis()+1500;
+float t = millis() + 1500;
 void pid_calc();
 void calc_turn();
 void motor_drive(int, int);
+void motor_drive_2(int, int);
 int station = 0;
 void setup() {
   lcd.init();
@@ -128,12 +129,12 @@ void check_object() {
   duration = pulseIn(echoPin, HIGH);
   inches = microsecondsToInches(duration);
   cm = microsecondsToCentimeters(duration);
-  if (inches < 2) {
+  if (cm < 5) {
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("object is placed");
 
-    Serial.println("object is placed");
+    Serial.println("object_Detected");
   } else {
     lcd.clear();
     lcd.setCursor(0, 0);
@@ -148,23 +149,17 @@ long microsecondsToInches(long microseconds) {
 long microsecondsToCentimeters(long microseconds) {
   return microseconds / 29 / 2;
 }
+long range_time;
 void loop() {
+  if (millis() >= range_time) {
+    range_time = millis() + 500;
+    check_object();
+  }
+  manualcmd();
 
-  if (millis())
-  //check_object();
-  //manualcmd();
-  //readdigitalSensors();
-  station_1();
-}
-void sharp_turn() {
-  analogWrite(motor1pin1, 255);
-  analogWrite(motor1pin2, 0);
-
-  analogWrite(motor2pin1, 255);
-  analogWrite(motor2pin2, 0);
-  delay(800);
 }
 
+int i =0;
 void station_1() {
   readdigitalSensors();
   pid_calc();
@@ -172,11 +167,26 @@ void station_1() {
   motor_drive(rspeed, lspeed);
   if ((sensor[0] == 0) && (sensor[1] == 0) && (sensor[2] == 0) && (sensor[3] == 0) && (sensor[4] == 0)) {
     stop();
+    lcd.clear();
+    lcd.setCursor(15, 0);
+        lcd.print("Reached Station-1");
+        delay(500);
+        for (i = 0; i < 20; i++) {
+          lcd.scrollDisplayLeft();
+          delay(150);
+        }
+        lcd.clear();
+    
+    delay(2000);
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Place Item for ");
+    lcd.setCursor(0, 1);
+    lcd.print("Delivery");
   }
   if ((sensor[0] == 1) && (sensor[1] == 1) && (sensor[2] == 0) && (sensor[3] == 0) && (sensor[4] == 0)) {
     Right();
-    
-    
   }
 
   //  if (station==1 && (sensor[0] == 0) && (sensor[1] == 0) && (sensor[2] == 0) && (sensor[3] == 0) && (sensor[4] == 0)){
@@ -279,40 +289,15 @@ void manualcmd() {
       //1 Button
       //Serial.print("Button Pressed 1 Passing Text to LCD");
       //count = count + 1;
+      lcd.clear();
+      lcd.setCursor(0, 1);
+      lcd.print("Going to Station 1");
       Serial.println("station 1");
-      while ((sensor[0] == 1) && (sensor[1] == 0) && (sensor[2] == 0) && (sensor[3] == 0) && (sensor[4] == 0)) {
-        readdigitalSensors();
-        pid_calc();
-        calc_turn();
-        motor_drive(rspeed, lspeed);
-      }
-      Right();
-      readdigitalSensors();
-      pid_calc();
-      calc_turn();
-      motor_drive(rspeed, lspeed);
-      if ((sensor[0] == 0) && (sensor[1] == 0) && (sensor[2] == 0) && (sensor[3] == 0) && (sensor[4] == 0)) {
-        stop();
-      }
-    }
-    if (results.value == 0xFF02FD) {
-
-      //2 Button
-      //Serial.print("Button Pressed 2 Passing Text to LCD");
-
-      stop();
-    }
-    if (results.value == 0xFFA857) {
-      //2 Button
-      //Serial.print("Button Pressed 2 Passing Text to LCD");
-
-      Backward();
+     station_1();
     }
     if (results.value == 0xFF9867) {
 
-      //2 Button
-      //Serial.print("Button Pressed 2 Passing Text to LCD");
-      //Serial.println("station 2");
+
       while ((sensor[0] == 1) && (sensor[1] == 1) && (sensor[2] == 0) && (sensor[3] == 0) && (sensor[4] == 0)) {
         readdigitalSensors();
         pid_calc();
@@ -471,25 +456,6 @@ void motor_drive(int rspeed, int lspeed) {
   analogWrite(motor2pin2, 0);
   analogWrite(motor1pin1, lspeed);
   analogWrite(motor1pin2, 0);
-
-
-
-  //  if (right > 0) {
-  //    analogWrite(motor2pin1,0 );
-  //    analogWrite(motor2pin2, right);
-  //  } else {
-  //    analogWrite(motor2pin1, abs(right));
-  //    analogWrite(motor2pin2, 0);
-  //  }
-  //
-  //
-  //  if (left > 0) {
-  //    analogWrite(motor1pin1, 0);
-  //    analogWrite(motor1pin2, left);
-  //  } else {
-  //    analogWrite(motor1pin1, abs(left));
-  //    analogWrite(motor1pin2, 0);
-  //  }
 }
 
 void motor_drive_2(int rspeed, int lspeed) {
